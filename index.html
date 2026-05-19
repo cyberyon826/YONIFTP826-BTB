@@ -1,0 +1,2301 @@
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Portal Resmi - Yonif TP 826/BTB</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+            :root {
+                --bg: #F5F5F7;
+                --sidebar-bg: rgba(242, 242, 247, 0.75);
+                --card-bg: #FFFFFF;
+                --army-green: #2E4A3B;
+                --accent: #3A5F46;
+                --emas: #C5A572;
+                --emas-light: rgba(197,165,114,0.15);
+                --danger: #FF3B30;
+                --text-primary: #1D1D1F;
+                --text-secondary: #6E6E73;
+                --border: rgba(60, 60, 67, 0.12);
+                --radius-lg: 14px;
+                --radius-md: 10px;
+                --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            }
+
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+
+            body {
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                background: var(--bg);
+                color: var(--text-primary);
+                display: flex;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+
+            /* BACKGROUND LORENG - FIX */
+        .bg-pattern::before {
+                content: '';
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: url('gambar/loreng.jpeg') center/cover;
+                z-index: -1;
+                opacity: 0;
+                transition: opacity 0.6s ease;
+            }
+        .bg-pattern.active::before { opacity: 0.18; }
+
+            /* SIDEBAR */
+        .sidebar {
+                width: 250px;
+                height: 100vh;
+                position: fixed;
+                background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(244,241,236,0.92));
+                backdrop-filter: blur(24px) saturate(180%);
+                -webkit-backdrop-filter: blur(24px) saturate(180%);
+                border-right: 1px solid rgba(60, 60, 67, 0.12);
+                box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                z-index: 100;
+                animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+            .sidebar::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 22% 18%, rgba(197,165,114,0.1), transparent 24%), radial-gradient(circle at 78% 16%, rgba(58,95,70,0.08), transparent 18%);
+                pointer-events: none;
+            }
+            @keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+            /* SIDEBAR HEADER + LOGO */
+        .sidebar-header {
+                height: 160px;
+                background: linear-gradient(180deg, rgba(46,74,59,0.5), rgba(46,74,59,0.90)), url('gambar/foto-markas.jpeg') center/cover;
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                color: white;
+            }
+        .logo-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        .logo-row img {
+                width: 55px;
+                height: 55px;
+                object-fit: contain;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.32));
+                transition: all 0.3s ease;
+                border-radius: 0;
+                background: transparent;
+                padding: 0;
+            }
+        .logo-row img:hover {
+                transform: rotate(8deg) scale(1.08);
+                filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+            }
+        .sidebar-header-text { text-align: center; }
+        .sidebar-header-text h1 { 
+                font-size: 1rem; 
+                font-weight: 800; 
+                text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+                letter-spacing: 0.5px;
+            }
+        .sidebar-header-text p { 
+                font-size: 0.7rem; 
+                color: rgba(255,255,255,0.9); 
+                margin-top: 2px; 
+                font-weight: 500;
+                letter-spacing: 0.3px;
+            }
+        .nav-wrapper { padding: 0.75rem; overflow-y: auto; flex: 1; }
+        .nav-section {
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: var(--text-secondary);
+                text-transform: uppercase;
+                padding: 1.2rem 0.75rem 0.5rem;
+                letter-spacing: 0.8px;
+            }
+        .nav-item {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.85rem 1rem;
+                margin: 6px 0;
+                border-radius: calc(var(--radius-md) + 2px);
+                font-size: 0.95rem;
+                font-weight: 500;
+                color: var(--text-primary);
+                cursor: pointer;
+                transition: transform 0.28s ease, background 0.28s ease, color 0.28s ease, box-shadow 0.28s ease;
+                position: relative;
+                overflow: hidden;
+                background: rgba(255,255,255,0.58);
+                border: 1px solid rgba(255,255,255,0.65);
+                backdrop-filter: blur(16px);
+            }
+        .nav-item::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 0;
+                height: 4px;
+                border-radius: 999px;
+                background: linear-gradient(90deg, var(--emas), var(--accent));
+                transition: width 0.32s ease;
+            }
+        .nav-item::after {
+                content: '';
+                position: absolute;
+                top: -20%;
+                left: -35%;
+                width: 60%;
+                height: 140%;
+                background: linear-gradient(120deg, rgba(255,255,255,0.24), rgba(255,255,255,0) 55%);
+                transform: rotate(25deg) translateX(-110%);
+                opacity: 0;
+                transition: transform 0.45s ease, opacity 0.35s ease;
+                pointer-events: none;
+            }
+        .nav-item:hover {
+                background: rgba(60, 60, 67, 0.1);
+                transform: translateX(2px);
+                border-color: rgba(58,95,70,0.18);
+            }
+        .nav-item:hover::before { width: 100%; }
+        .nav-item:hover::after { transform: rotate(25deg) translateX(5%); opacity: 0.18; }
+        .nav-item.active {
+                background: linear-gradient(135deg, rgba(58,95,70,0.34), rgba(197,165,114,0.18));
+                color: white;
+                font-weight: 600;
+                box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18), 0 15px 38px rgba(0,0,0,0.12);
+                border-color: rgba(255,255,255,0.22);
+            }
+        .nav-item.active::before { width: 100%; }
+        .nav-item svg { width: 18px; height: 18px; transition: transform 0.25s ease, color 0.25s ease; }
+
+.nav-item:hover svg {
+    transform: scale(1.18) rotate(6deg);
+}
+.nav-item.active svg {
+    transform: scale(1.2);
+}
+            /* ANIMASI RIPPLE */
+        .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+                transform: scale(0);
+                animation: ripple 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                pointer-events: none;
+                box-shadow: 0 0 20px rgba(255,255,255,0.6);
+            }
+            @keyframes ripple {
+                0% { transform: scale(0); opacity: 1; }
+                50% { opacity: 0.8; }
+                100% { transform: scale(4); opacity: 0; }
+            }
+
+            /* MAIN CONTENT */
+        .main {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+                padding: 3rem 2rem 1.5rem;
+                animation: fadeInUp 0.8s ease 0.3s backwards;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+        .content-wrapper { flex: 1; }
+        .page {
+                display: none;
+                opacity: 0;
+                transform: translateY(10px);
+                transition: opacity 0.35s ease, transform 0.35s ease;
+            }
+        .page.active {
+                display: block;
+                opacity: 1;
+                transform: translateY(0);
+            }
+        .page-title {
+                font-size: 2.25rem;
+                font-weight: 800;
+                letter-spacing: -0.8px;
+                margin-bottom: 0.5rem;
+                animation: slideUp 0.5s ease;
+            }
+        .page-desc {
+                color: var(--text-secondary);
+                margin-bottom: 2.5rem;
+                animation: slideInDesc 0.6s ease 0.2s backwards;
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+            @keyframes slideInDesc {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+
+            /* GALERI STYLING */
+        .galeri-grid { 
+                display: grid; 
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+                gap: 1.5rem; 
+                margin-top: 1.5rem;
+            }
+        .galeri-item { 
+                position: relative;
+                overflow: hidden; 
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow);
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                animation: cardStagger 0.5s ease backwards;
+            }
+        .galeri-item:nth-child(1) { animation-delay: 0.3s; }
+        .galeri-item:nth-child(2) { animation-delay: 0.4s; }
+        .galeri-item:nth-child(3) { animation-delay: 0.5s; }
+        .galeri-item:nth-child(4) { animation-delay: 0.6s; }
+        .galeri-item:nth-child(5) { animation-delay: 0.7s; }
+        .galeri-item:nth-child(6) { animation-delay: 0.8s; }
+        .galeri-item:nth-child(7) { animation-delay: 0.9s; }
+        .galeri-item:nth-child(8) { animation-delay: 1.0s; }
+        .galeri-item:nth-child(9) { animation-delay: 1.1s; }
+        .galeri-item:nth-child(10) { animation-delay: 1.2s; }
+        .galeri-item:hover { 
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 15px 50px rgba(0,0,0,0.15), 0 0 0 1px rgba(197,165,114,0.15);
+                border-radius: calc(var(--radius-lg) + 2px);
+            }
+        .galeri-img { 
+                width: 100%; 
+                height: 250px; 
+                object-fit: cover;
+                transition: transform 0.4s ease;
+            }
+        .galeri-item:hover .galeri-img { transform: scale(1.1); }
+        .galeri-overlay {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: linear-gradient(135deg, rgba(46,74,59,0.7), rgba(58,95,70,0.7));
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                padding: 1.25rem;
+                color: white;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+        .galeri-item:hover .galeri-overlay { opacity: 1; }
+        .galeri-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+        .galeri-caption { font-size: 0.85rem; line-height: 1.4; opacity: 0.95; }
+
+            /* KEGIATAN TIMELINE STYLING */
+        .kegiatan-item {
+                margin-bottom: 2rem;
+                animation: slideUp 0.5s ease backwards;
+        }
+        .kegiatan-item:nth-child(1) { animation-delay: 0.3s; }
+        .kegiatan-item:nth-child(2) { animation-delay: 0.4s; }
+        .kegiatan-item:nth-child(3) { animation-delay: 0.5s; }
+        .kegiatan-item:nth-child(4) { animation-delay: 0.6s; }
+        .kegiatan-item:nth-child(5) { animation-delay: 0.7s; }
+        .kegiatan-item:nth-child(6) { animation-delay: 0.8s; }
+        .kegiatan-item.hidden { display: none; }
+        .filter-btn {
+                border: 1px solid rgba(46, 74, 59, 0.15);
+                box-shadow: 0 10px 30px rgba(46, 74, 59, 0.06);
+                transition: all 0.25s ease;
+                border-radius: var(--radius-md);
+                padding: 0.75rem 1.25rem;
+                background: rgba(255,255,255,0.8);
+                backdrop-filter: blur(10px);
+            }
+        .filter-btn.active {
+                background: var(--accent) !important;
+                color: white !important;
+                border-color: var(--accent) !important;
+                box-shadow: 0 16px 35px rgba(46, 74, 59, 0.18);
+                transform: translateY(-1px);
+            }
+        .filter-btn:hover {
+                background: var(--accent) !important;
+                color: white !important;
+                border-color: var(--accent) !important;
+                transform: translateY(-1px);
+                box-shadow: 0 12px 28px rgba(46, 74, 59, 0.12);
+            }
+
+        .page-title {
+                position: relative;
+                display: inline-block;
+                padding-bottom: 0.35rem;
+                animation: slideInTitle 0.6s ease backwards;
+            }
+        .page-title::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 0;
+                height: 4px;
+                border-radius: 999px;
+                background: linear-gradient(90deg, var(--emas), var(--accent));
+                animation: titleUnderline 0.8s ease 0.4s backwards;
+            }
+            @keyframes slideInTitle {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes titleUnderline {
+                from { width: 0; }
+                to { width: 70px; }
+            }
+
+        .kegiatan-intro {
+                display: grid;
+                grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.8fr);
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+        }
+        .kegiatan-summary-card {
+                background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(243,241,236,0.95));
+                border: 1px solid rgba(58, 95, 70, 0.12);
+                border-radius: var(--radius-lg);
+                padding: 1.5rem;
+                box-shadow: 0 24px 60px rgba(46, 74, 59, 0.08);
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+        }
+        .kegiatan-summary-card .badge {
+                width: 46px;
+                height: 46px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 16px;
+                background: rgba(58, 95, 70, 0.1);
+                color: var(--accent);
+                font-size: 1.25rem;
+        }
+        .kegiatan-summary-card .kegiatan-metric {
+                background: rgba(58, 95, 70, 0.08);
+                border-radius: 14px;
+                padding: 1rem;
+                display: grid;
+                gap: 0.35rem;
+        }
+        .kegiatan-summary-card .kegiatan-metric-value {
+                font-size: 1.7rem;
+                font-weight: 800;
+                color: var(--accent);
+        }
+        .kegiatan-summary-card .kegiatan-metric-label {
+                color: var(--text-secondary);
+                font-size: 0.82rem;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+        }
+
+        .kegiatan-item {
+                position: relative;
+                padding-left: 1.75rem;
+                transition: all 0.25s ease;
+                border-radius: var(--radius-md);
+                margin-bottom: 1.5rem;
+                background: rgba(255,255,255,0.6);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255,255,255,0.3);
+                padding: 1.25rem 1rem;
+                padding-left: 2.5rem;
+            }
+        .kegiatan-item:hover {
+                transform: translateY(-3px) translateX(2px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+                background: rgba(255,255,255,0.9);
+                border-color: rgba(197,165,114,0.2);
+            }
+        .kegiatan-item::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 1.6rem;
+                bottom: 0.5rem;
+                width: 3px;
+                background: linear-gradient(180deg, rgba(58, 95, 70, 0.85), rgba(197, 165, 114, 0.2));
+                border-radius: 999px;
+                transition: all 0.3s ease;
+            }
+        .kegiatan-item:hover::before {
+                background: linear-gradient(180deg, var(--emas), var(--accent));
+                width: 4px;
+                box-shadow: 0 0 10px rgba(197,165,114,0.3);
+            }
+
+            /* CARD DENGAN AKSEN GRADASI 4 SUDUT */
+        .card {
+                background: var(--card-bg);
+                border-radius: var(--radius-lg);
+                box-shadow: var(--shadow);
+                border: 1px solid var(--border);
+                padding: 1.75rem;
+                margin-bottom: 1.75rem;
+                transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                animation: cardStagger 0.5s ease backwards;
+                position: relative;
+                overflow: hidden;
+            }
+        .card::before, .card::after {
+                content: '';
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                pointer-events: none;
+                z-index: 0;
+            }
+        .card::before {
+                top: 0; left: 0;
+                background: radial-gradient(circle at top left, var(--emas-light), transparent 70%);
+            }
+        .card::after {
+                bottom: 0; right: 0;
+                background: radial-gradient(circle at bottom right, rgba(58,95,70,0.1), transparent 70%);
+            }
+        .card > * { position: relative; z-index: 1; }
+
+        .card:nth-child(1) { animation-delay: 0.3s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.5s; }
+        .card:nth-child(4) { animation-delay: 0.6s; }
+        .card:nth-child(5) { animation-delay: 0.7s; }
+        .card:nth-child(6) { animation-delay: 0.8s; }
+        .card:nth-child(7) { animation-delay: 0.9s; }
+        .card:nth-child(8) { animation-delay: 1.0s; }
+            @keyframes cardStagger { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .card:hover { 
+                transform: translateY(-4px); 
+                box-shadow: 0 12px 40px rgba(0,0,0,0.1), 0 0 0 1px var(--emas-light);
+                border-color: rgba(197,165,114,0.2);
+            }
+
+            /* SKELETON LOADING */
+        .skeleton {
+                background: linear-gradient(90deg, rgba(255,255,255,0.8) 25%, rgba(60,60,67,0.1) 50%, rgba(255,255,255,0.8) 75%);
+                background-size: 200% 100%;
+                animation: skeleton-loading 1.5s infinite;
+            }
+            @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+
+            /* LIST ITEM BUAT PROFIL */
+        .list-item {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid var(--border);
+                font-size: 0.9rem;
+            }
+        .list-item:last-child { border-bottom: none; }
+        .list-item span:first-child { color: var(--text-secondary); font-weight: 500; }
+        .list-item span:last-child { font-weight: 600; text-align: right; }
+
+            /* LOGO BESAR DI PROFIL */
+        .profil-logo-row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                margin-bottom: 2rem;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, var(--emas-light), rgba(58,95,70,0.05));
+                border-radius: var(--radius-lg);
+            }
+        .profil-logo-row img {
+                width: 110px;
+                height: 110px;
+                object-fit: contain;
+                filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+                transition: all 0.4s ease;
+                border-radius: 50%;
+                background: transparent;
+                padding: 0;
+            }
+        .profil-logo-row img:hover {
+                transform: scale(1.15) rotate(5deg);
+                filter: drop-shadow(0 8px 25px rgba(0,0,0,0.2));
+            }
+
+            /* BERITA DI BERANDA */
+        .berita-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .berita-card { overflow: hidden; padding: 0; animation: cardStagger 0.5s ease backwards; }
+        .berita-card:nth-child(1) { animation-delay: 0.2s; }
+        .berita-card:nth-child(2) { animation-delay: 0.3s; }
+        .berita-card:nth-child(3) { animation-delay: 0.4s; }
+        .berita-card:nth-child(4) { animation-delay: 0.5s; }
+        .berita-card:nth-child(5) { animation-delay: 0.6s; }
+        .berita-card img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                transition: all 0.4s ease;
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            }
+        .berita-card:hover img {
+                transform: scale(1.05);
+                filter: brightness(1.1) contrast(1.05);
+            }
+        .berita-info { padding: 1.25rem; }
+        .berita-tanggal { font-size: 0.75rem; color: var(--emas); font-weight: 700; }
+        .berita-judul { font-weight: 700; margin: 0.5rem 0; font-size: 1.05rem; line-height: 1.4; }
+        .berita-excerpt { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; }
+        .btn-link {
+                display: inline-block;
+                margin-top: 1rem;
+                color: var(--accent);
+                font-weight: 600;
+                font-size: 0.875rem;
+                text-decoration: none;
+                transition: all 0.25s ease;
+                position: relative;
+            }
+        .btn-link::after {
+                content: '→';
+                margin-left: 0.25rem;
+                transition: transform 0.25s ease;
+            }
+        .btn-link:hover {
+                color: var(--emas);
+                transform: translateX(2px);
+            }
+        .btn-link:hover::after {
+                transform: translateX(3px);
+            }
+
+            /* STATISTIK SATUAN */
+        .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card {
+                text-align: center;
+                padding: 1.5rem;
+                transition: all 0.3s ease;
+                border-radius: var(--radius-lg);
+                background: rgba(255,255,255,0.8);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255,255,255,0.2);
+            }
+        .stat-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+                background: rgba(255,255,255,0.95);
+            }
+        .stat-angka {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: var(--accent);
+                line-height: 1;
+                transition: color 0.3s ease;
+            }
+        .stat-card:hover .stat-angka {
+                color: var(--emas);
+            }
+        .stat-angka { font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; margin-top: 0.5rem; }
+
+            /* ACCORDION / KLIK-BUKA */
+        .accordion-item { border-bottom: 1px solid var(--border); }
+        .accordion-item:last-child { border-bottom: none; }
+        .accordion-header {
+                padding: 1.25rem 0;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: all 0.25s ease;
+                border-radius: var(--radius-md);
+                padding-left: 1rem;
+                padding-right: 1rem;
+                margin: 0.25rem 0;
+            }
+        .accordion-header:hover {
+                background: rgba(58,95,70,0.05);
+                color: var(--accent);
+                transform: translateX(2px);
+            }
+        .accordion-header::after {
+                content: '+';
+                font-size: 1.5rem;
+                font-weight: 400;
+                transition: transform 0.3s ease, color 0.25s ease;
+                color: var(--text-secondary);
+            }
+        .accordion-header.active::after {
+                transform: rotate(45deg);
+                color: var(--accent);
+            }
+        .accordion-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease, padding 0.4s ease;
+                color: var(--text-secondary);
+                line-height: 1.7;
+            }
+        .accordion-content.active { max-height: 500px; padding-bottom: 1.25rem; }
+
+            /* FOOTER */
+        .footer {
+                margin-top: 3rem;
+                padding: 2rem;
+                border-top: 1px solid var(--border);
+                text-align: center;
+                background: linear-gradient(180deg, transparent, var(--emas-light));
+                border-radius: var(--radius-lg);
+            }
+        .footer-logos {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                margin-bottom: 1rem;
+            }
+        .footer-logos img {
+                width: 80px;
+                height: 80px;
+                object-fit: contain;
+                opacity: 0.8;
+                transition: all 0.3s ease;
+                filter: grayscale(20%);
+            }
+        .footer-logos img:hover {
+                opacity: 1;
+                transform: scale(1.1) rotate(2deg);
+                filter: grayscale(0%);
+            }
+        .footer p { font-size: 0.8rem; color: var(--text-secondary); }
+        .footer strong { color: var(--accent); font-weight: 700; }
+
+            @media (max-width: 1024px) {
+            .stat-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+            @media (max-width: 900px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main { margin-left: 0; width: 100%; padding: 1.5rem; }
+                body { display: block; }
+            .stat-grid { grid-template-columns: 1fr; }
+            .profil-logo-row { flex-direction: column; gap: 1.5rem; }
+            }
+        
+            /* === FIX MOBILE LAYANAN PENGADUAN === */
+    @media screen and (max-width: 768px) {
+        /* 1. Paksa semua grid di halaman pengaduan jadi 1 kolom */
+        #pengaduan .card > div[style*="grid"],
+        #pengaduan div[style*="display: grid"] {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2rem !important;
+        }
+
+        /* 2. Kasih jarak biar gak nempel/ketimpa */
+        #pengaduan form {
+            margin-bottom: 2rem !important;
+        }
+        
+        #pengaduan .card {
+            margin-bottom: 1.5rem !important;
+            padding: 1.25rem !important;
+        }
+
+        /* 3. Form input full + gak ketutup */
+        #pengaduan input, 
+        #pengaduan textarea, 
+        #pengaduan select {
+            width: 100% !important;
+            box-sizing: border-box !important;
+            font-size: 16px !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* 4. Kontak Darurat & FAQ kasih jarak atas */
+        #pengaduan .card h3 {
+            margin-top: 0 !important;
+        }
+    }
+    
+    @media (max-width: 768px){
+    #kontak > div,
+    #pengaduan > div{
+        grid-template-columns: 1fr !important;
+    }
+
+    /* FIX HALAMAN KEGIATAN MOBILE */
+    #kegiatan .kegiatan-intro {
+        grid-template-columns: 1fr !important;
+    }
+    #kegiatan .kegiatan-summary-card {
+        padding: 1.25rem !important;
+    }
+    #kegiatan .filter-btn {
+        width: 100%;
+        min-width: 0;
+    }
+    #kegiatan .filter-btn.active,
+    #kegiatan .filter-btn:hover {
+        transform: none !important;
+    }
+    #kegiatan .kegiatan-item {
+        padding-left: 0 !important;
+    }
+    #kegiatan .kegiatan-item::before {
+        left: -0.4rem !important;
+        top: 1rem !important;
+        bottom: 0.5rem !important;
+    }
+    #kegiatan .kegiatan-item .card {
+        margin-top: 1rem;
+    }
+    #kegiatan .card {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+}
+
+/* FIX HALAMAN SEJARAH */
+#sejarah .card {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+#sejarah .list-item {
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#sejarah .list-item span:first-child {
+    flex: 1;
+    min-width: 220px;
+    line-height: 1.6;
+}
+
+#sejarah .list-item span:last-child {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px){
+    #sejarah > div:nth-of-type(2){
+        grid-template-columns: 1fr !important;
+    }
+}
+
+            /* BACK TO TOP BUTTON */
+        .back-to-top {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                width: 50px;
+                height: 50px;
+                background: linear-gradient(135deg, var(--accent), var(--army-green));
+                color: white;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 4px 15px rgba(58, 95, 70, 0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+            }
+        .back-to-top.show {
+                opacity: 1;
+                visibility: visible;
+            }
+        .back-to-top:hover {
+                transform: translateY(-2px) scale(1.1);
+                box-shadow: 0 6px 20px rgba(58, 95, 70, 0.4);
+            }
+
+            /* SCROLL PROGRESS INDICATOR */
+        .scroll-progress {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 3px;
+                background: linear-gradient(90deg, var(--emas), var(--accent));
+                z-index: 1001;
+                transition: width 0.25s ease;
+            }
+
+            /* LOADING ANIMATION */
+        .loading-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                opacity: 1;
+                transition: opacity 0.5s ease;
+            }
+        .loading-overlay.hide {
+                opacity: 0;
+                pointer-events: none;
+            }
+        .loading-spinner {
+                width: 60px;
+                height: 60px;
+                border: 4px solid rgba(58, 95, 70, 0.1);
+                border-top: 4px solid var(--accent);
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+        @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            /* TOAST NOTIFICATIONS */
+        .toast-container {
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                z-index: 1002;
+                pointer-events: none;
+            }
+        .toast {
+                background: var(--card-bg);
+                color: var(--text-primary);
+                padding: 1rem 1.5rem;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow);
+                margin-bottom: 1rem;
+                transform: translateX(100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                pointer-events: auto;
+                border-left: 4px solid var(--accent);
+                max-width: 300px;
+            }
+        .toast.show {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        .toast.success { border-left-color: var(--accent); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.info { border-left-color: var(--emas); }
+
+            /* SMOOTH SCROLL */
+        html {
+                scroll-behavior: smooth;
+            }
+
+            /* IMAGE LAZY LOADING */
+        img[data-src] {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+        img[data-src].loaded {
+                opacity: 1;
+            }
+
+            /* DARK MODE TOGGLE */
+        .dark-mode-toggle {
+                position: fixed;
+                bottom: 2rem;
+                left: 2rem;
+                width: 50px;
+                height: 50px;
+                background: linear-gradient(135deg, var(--accent), var(--army-green));
+                color: white;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 4px 15px rgba(58, 95, 70, 0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+            }
+        .dark-mode-toggle:hover {
+                transform: translateY(-2px) scale(1.1);
+                box-shadow: 0 6px 20px rgba(58, 95, 70, 0.4);
+            }
+
+            /* DARK MODE STYLES */
+        body.dark-mode {
+                --bg: #1a1a1a;
+                --sidebar-bg: rgba(30, 30, 30, 0.95);
+                --card-bg: #2a2a2a;
+                --text-primary: #ffffff;
+                --text-secondary: #cccccc;
+                --border: rgba(255, 255, 255, 0.1);
+            }
+        body.dark-mode .sidebar {
+                background: linear-gradient(180deg, rgba(30,30,30,0.95), rgba(20,20,20,0.95));
+            }
+        body.dark-mode .nav-item {
+                background: rgba(255,255,255,0.05);
+                border-color: rgba(255,255,255,0.1);
+            }
+        body.dark-mode .nav-item:hover {
+                background: rgba(255,255,255,0.1);
+            }
+        body.dark-mode .card {
+                background: var(--card-bg);
+                border-color: var(--border);
+            }
+            /* PRINT STYLES */
+        @media print {
+                .sidebar, .back-to-top, .dark-mode-toggle, .scroll-progress, .toast-container {
+                    display: none !important;
+                }
+                .main {
+                    margin-left: 0 !important;
+                    width: 100% !important;
+                }
+                .page {
+                    display: block !important;
+                }
+                body {
+                    background: white !important;
+                    color: black !important;
+                }
+                .card {
+                    box-shadow: none !important;
+                    border: 1px solid #ccc !important;
+                    break-inside: avoid;
+                }
+                img {
+                    max-width: 100% !important;
+                    height: auto !important;
+                }
+            }
+
+            /* ACCESSIBILITY IMPROVEMENTS */
+        @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+
+            /* FOCUS STYLES */
+        .nav-item:focus,
+        button:focus,
+        input:focus,
+        textarea:focus,
+        select:focus {
+                outline: 2px solid var(--emas);
+                outline-offset: 2px;
+            }
+
+            /* HIGH CONTRAST MODE */
+        @media (prefers-contrast: high) {
+                :root {
+                    --accent: #006600;
+                    --army-green: #004400;
+                    --emas: #CC9900;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-pattern">
+
+        <!-- LOADING OVERLAY -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- SCROLL PROGRESS -->
+        <div class="scroll-progress" id="scrollProgress"></div>
+
+        <!-- TOAST CONTAINER -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- BACK TO TOP BUTTON -->
+        <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+        <!-- DARK MODE TOGGLE -->
+        <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+            <span id="darkModeIcon">🌙</span>
+        </button>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-row">
+                    <img src="gambar/logo-kartika-eka-paksi.png" alt="Logo Kartika Eka Paksi">
+                    <img src="gambar/logo-satuan.png" alt="Logo Yonif TP 826/BTB">
+                </div>
+                <div class="sidebar-header-text">
+                    <h1>YONIF TP 826/BTB</h1>
+                    <p>BENUO TAKA BEKERAI</p>
+                </div>
+            </div>
+            <div class="nav-wrapper">
+                <div class="nav-section">Utama</div>
+                <a class="nav-item active" onclick="showPage(event, 'beranda')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Beranda
+                </a>
+                <a class="nav-item" onclick="showPage(event, 'profil')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Profil Satuan
+                </a>
+                <a class="nav-item" onclick="showPage(event, 'sejarah')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Sejarah
+                </a>
+                <a class="nav-item" onclick="showPage(event, 'struktur')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    Struktur
+                </a>
+                <div class="nav-section">Operasional</div>
+                <a class="nav-item" onclick="showPage(event, 'tugas')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Tugas Pokok
+                </a>
+                <a class="nav-item" onclick="showPage(event, 'kegiatan')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    Kegiatan
+                </a>
+                <a class="nav-item" onclick="showPage(event, 'galeri')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    Galeri
+                </a>
+                <div class="nav-section">Layanan Publik</div>
+                <a class="nav-item" onclick="showPage(event, 'pengaduan')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    Layanan Pengaduan
+                </a>
+                <a class="nav-item" onclick="showPage(event, 'kontak')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Kontak
+                </a>
+            
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+            <div class="content-wrapper">
+                <!-- BERANDA -->
+                <div id="beranda" class="page active">
+                    <h2 class="page-title">Beranda</h2>
+                    <p class="page-desc">Portal Informasi Resmi Yonif TP 826/Benuo Taka Bekerai</p>
+                     
+                    <div class="card stat-grid">
+                        <div class="stat-card"><div class="stat-angka">Latihan Menembak </div><div class="stat-label">Prajurit Yonif TP 826/BTB Raih Medali Perak pada Kejurnas Karate Piala Ketua Umum PB FORKI 2026</div></div>
+                        <div class="stat-card"><div class="stat-angka">Panen Lahan Ketahan Pangan</div><div class="stat-label">PANEN BERSAMA</div></div>
+                        <div class="stat-card"><div class="stat-angka">Penajam Paser Utara</div><div class="stat-label">HUT PPU</div></div>
+                        <div class="stat-card"><div class="stat-angka">Mandiri Produktif</div><div class="stat-label">MOTO SATUAN</div></div>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 1.75rem;">
+                        <h3 class="card-title">Video Profil Satuan</h3>
+                        <video controls playsinline preload="metadata" style="width: 100%; min-height: 240px; border-radius: var(--radius-lg); background: black;">
+                            <source src="./video/profil-satuan.mp4" type="video/mp4">
+                            Browser Anda tidak mendukung pemutar video.
+                        </video>
+                        <p style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.95rem;">Jika video tidak muncul, buka langsung <a href="./video/profil-satuan.mp4" target="_blank" rel="noreferrer" style="color: var(--accent); text-decoration: underline;">di sini</a>.</p>
+                    </div>
+
+                    <h3 style="font-weight:700; margin-bottom:1.5rem;">Berita Kegiatan Terbaru</h3>
+                    <div class="berita-grid">
+                        <div class="card berita-card">
+                            <img src="gambar/Lari.jpeg" alt="BALIKPAPAN COASTAL RUNNING 2026">
+                            <div class="berita-info">
+                                <p class="berita-tanggal">3 Mei 2026</p>
+                                <p class="berita-excerpt">Prajurit Yonif TP 826/BTB Meraih Juara di "BALIKPAPAN COASTAL RUNNING 2026"</h4>
+                                <h4 class="berita-judul">Serda Robby Ikbal Siergar Mendapat Juara 1 dan Serda Sejati Ginting mendapat Juara 3 pada event lari Balikapan Coastal Running 2026 yang diadakan di Balikpaan tanggal 3 Mei 2026,  </p>
+                                <a href="#" class="btn-link">Baca Selengkapnya →</a>
+                            </div>
+                        </div>
+                        <div class="card berita-card">
+                            <img src="gambar/Nembak.jpeg" alt="KEJUARAAN NASIONAL KARATE PIALA KETUA UMUM PB FORKI IV">
+                            <div class="berita-info">
+                                <p class="berita-tanggal">12 MEI 2026</p>
+                                <h4 class="berita-judul">Prajurit Yonif TP 826/BTB Raih Medali Perak pada Kejurnas Karate Piala Ketua Umum PB FORKI 2026</h4>
+                                <p class="berita-excerpt">Bandung, Prajurit Kodam VI/Mulawarman kembali menorehkan prestasi membanggakan di tingkat nasional. Kali ini, prajurit Yonif TP 826/BTB Brigif TP 85/BTC berhasil meraih Juara II dan membawa pulang medali perak pada ajang Kejuaraan Nasional (Kejurnas) Karate Piala Ketua Umum PB FORKI Tahun 2026 yang berlangsung di GOR C-Tra Arena, Kota Bandung, Jawa Barat.
+
+Kejuaraan bergengsi yang diikuti karateka terbaik dari seluruh Indonesia tersebut digelar sejak 9 hingga 12 Mei 2026 dan dibuka secara resmi oleh Ketua Umum PB FORKI, Hadi Tjahjanto.
+
+Prestasi membanggakan tersebut diraih oleh Serda Muhammad Padi Fauzan Syam yang tampil pada nomor Kumite -75 Kg U-21 Putra mewakili Perguruan Kushin Ryu M. Karate Do Indonesia (KKI). Dengan semangat juang tinggi dan kemampuan teknik yang matang, ia mampu menembus babak final dan meraih medali perak setelah melewati pertandingan yang berlangsung ketat dan kompetitif.
+
+Keberhasilan tersebut menjadi bukti bahwa prajurit Kodam VI/Mulawarman tidak hanya mampu menjalankan tugas pokok di satuan, namun juga memiliki prestasi membanggakan di bidang olahraga serta mampu bersaing di tingkat nasional.
+  </p>
+                                <a href="#" class="btn-link">Baca Selengkapnya →</a>
+                            </div>
+                       </div>
+                        <div class="card berita-card">
+                            <img src="gambar/panen.jpeg" alt="Panen">
+                            <div class="berita-info">
+                                <p class="berita-tanggal">20 APRIL 2026</p>
+                                <h4 class="berita-judul">Panen Cabai Bersama Masyarakat Hasil Lahan Ketahanan Pangan</h4>
+                                <p class="berita-excerpt">Program ketahanan pangan satuan berhasil panen. "MERAHNYA CABAI,ERATNYA PERSAUDARAAN". Panen cabai bersama masyarakat-- bukti bahwa ketahanan pangan dimulai dari kebersamaan di lapangan dan Hasilnya dibagikan untuk warga logistik...</p>
+                                <a href="#" class="btn-link">Baca Selengkapnya →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFIL -->
+                <div id="profil" class="page">
+                    <h2 class="page-title">Profil Satuan</h2>
+                    <p class="page-desc">Data lengkap Komandan dan Kesatuan Yonif TP 826/BTB</p>
+                    
+                    <div class="profil-logo-row">
+                        <img src="gambar/logo-kartika-eka-paksi.png" alt="Logo Kartika Eka Paksi">
+                        <img src="gambar/logo-satuan.png" alt="Logo Yonif 826/BTB">
+                    </div>
+
+                    <div class="card" style="margin-bottom: 1.75rem;">
+                        <h3 class="card-title">Video Profil Satuan</h3>
+                        <video controls playsinline preload="metadata" style="width: 100%; min-height: 240px; border-radius: var(--radius-lg); background: black;">
+                            <source src="./video/profil-satuan.mp4" type="video/mp4">
+                            Browser Anda tidak mendukung pemutar video.
+                        </video>
+                        <p style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.95rem;">Jika video tidak muncul, buka langsung <a href="./video/profil-satuan.mp4" target="_blank" rel="noreferrer" style="color: var(--accent); text-decoration: underline;">di sini</a>.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Komandan Batalyon</h3>
+                        <div style="display:flex; gap:1.5rem; align-items:center; margin-bottom:1.5rem;">
+                            <img src="gambar/danyon.jpeg" alt="Danyon" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:3px solid var(--army-green);">
+                            <div>
+                                <h3 style="font-weight:800;">Letkol Inf Sulaiman S.I.P M.Han</h3>
+                                <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;"> Akmil 2008</p>
+                            </div>
+                        </div>
+                        <h4 style="font-weight:600; margin-bottom:0.75rem;">Riwayat Jabatan</h4>
+                        <div class="list-item"><span>2025 - Sekarang</span><span>Danyonif TP 826/BTB</span></div>
+                        <div class="list-item"><span>2022 - 2024</span><span> XXX</span></div>
+                        <div class="list-item"><span>2020 - 2022</span><span> XXX</span></div>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Data Kesatuan</h3>
+                        <div class="list-item"><span>Nama Satuan</span><span>Batalyon Infanteri Teritorial Pembangunan 826</span></div>
+                        <div class="list-item"><span>Sebutan</span><span>BENUO TAKA BEKERAI / BTB</span></div>
+                        <div class="list-item"><span>Moto</span><span> MANDIRI PRODUKTIF DAN BERDAYA GUNA</span></div>
+                        <div class="list-item"><span>Dibentuk</span><span>01 Juni 2025</span></div>
+                        <div class="list-item"><span>Markas</span><span>Jl. Simpang PLN Gersik, Penajam, Penajam Paser Utara 76116</span></div>
+                        <div class="list-item"><span>Komando Atas</span><span>Brigade Infanteri Teritorial Pembangunan 85/ Benuo Taka Cakti</span></div>
+                    </div>
+                </div>
+
+                <!-- TUGAS POKOK PAKAI ACCORDION -->
+    <div id="tugas" class="page">
+        <h2 class="page-title">Tugas Pokok</h2>
+        <p class="page-desc">Klik setiap poin untuk melihat detail tugas</p>
+        <div class="card">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">1. Pembinaan Teritorial</div>
+                <div class="accordion-content">Melaksanakan Binter untuk menciptakan ruang, alat, dan kondisi juang yang tangguh di wilayah. Termasuk Komsos, Bakti TNI, dan pembinaan Wawasan Kebangsaan.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">2. Ketahanan Pangan</div>
+                <div class="accordion-content">Menjadi pelopor program ketahanan pangan nasional melalui pemanfaatan lahan tidur milik TNI, demplot, dan pendampingan kepada kelompok tani binaan di wilayah Penajam Paser Utara, Kalimantan Timur.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">3. Karya Bakti TNI</div>
+                <div class="accordion-content">Membantu percepatan pembangunan daerah melalui program TMMD, bedah rumah tidak layak huni, perbaikan infrastruktur desa, dan bantuan penanganan bencana alam.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">4. Pembinaan Potensi Maritim</div>
+                <div class="accordion-content">Mengoptimalkan pengawasan wilayah pesisir dan laut, serta mendukung program pelatihan bela negara maritim untuk masyarakat.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">5. Peningkatan Kesejahteraan Masyarakat</div>
+                <div class="accordion-content">Melaksanakan program bantuan sosial, pelatihan UMKM, dan peningkatan kualitas hidup masyarakat di wilayah teritorial.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">6. Pengawasan Wilayah Perbatasan</div>
+                <div class="accordion-content">Mengawasi dan mengamankan wilayah perbatasan untuk mencegah aktivitas ilegal seperti penyelenggaraan, peredaran narkoba, dan human trafficking.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">7. Pembinaan Wawasan Kebangsaan</div>
+                <div class="accordion-content">Meningkatkan kesadaran bela negara dan nasionalisme masyarakat melalui sosialisasi 4 pilar kebangsaan dan kegiatan cinta tanah air.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">8. Dukungan Penanggulangan Bencana</div>
+                <div class="accordion-content">Bersinergi dengan BNPB dan lembaga terkait untuk mitigasi, tanggap darurat, dan pemulihan pasca-bencana di wilayah.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">9. Pembinaan UMKM dan Ekonomi Kreatif</div>
+                <div class="accordion-content">Memberdayakan ekonomi lokal melalui pelatihan, pendampingan, dan promosi produk UMKM berbasis potensi daerah.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">10. Inovasi Teknologi untuk Masyarakat</div>
+                <div class="accordion-content">Memanfaatkan teknologi digital (IoT, AI, aplikasi) untuk meningkatkan kualitas layanan publik dan efisiensi operasional.</div>
+            </div>
+        </div>
+    </div>
+
+                <!-- HALAMAN LAINNYA... -->
+                <!-- HALAMAN SEJARAH -->
+    <div id="sejarah" class="page">
+        <h2 class="page-title">Sejarah Satuan</h2>
+        <p class="page-desc">Perjalanan pengabdian Yonif TP 826/Benuo Taka bekerai dalam menjaga kedaulatan NKRI di Kalimantan Timur</p>
+        
+        <div class="card" style="margin-bottom: 1.75rem;">
+            <h3 class="card-title">Latar Belakang Pembentukan</h3>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                Batalyon Infanteri Teritorial Pembangunan 826/Benuo Taka Bekerai <strong>Peraturan Panglima TNI Nomor 19 Tahun 2024</strong> sebagai respon terhadap dinamika strategis pembangunan Ibu Kota Nusantara (IKN) di Kalimantan Timur dan sebagai bagian strategi pertahanan negara untuk mendukung pembangunan nasional,ketahanan pangan, dan pemberdayaan masyarakat, khususnya di wilayah rawan.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8;">
+                Satuan ini mengemban tugas pokok <strong>Operasi Militer Selain Perang (OMSP)</strong> dengan fokus pada pembinaan teritorial, bantuan pembangunan infrastruktur, dan penguatan ketahanan wilayah penyangga IKN. Nama "Benuo Taka Bekerai" diambil dari bahas paser Kalimantan Timur yang mempunyai arti "TANAH KITA BERSAMA".
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-bottom: 1.75rem;">
+            <div class="card">
+                <h3 class="card-title">Tonggak Sejarah</h3>
+                <div style="border-left: 3px solid var(--accent); padding-left: 1.25rem;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="font-weight: 700; color: var(--accent); margin-bottom: 0.25rem;">22 Juli 2025</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">
+                            Peresmian satuan oleh Pangdam VI/Mulawarman di Makodam VI/Mulawarman, Balikpapan, Kalimantan Timur. Dilantik Danyon pertama Letkol Inf. Sulaiman S.I.P M.Han.
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="font-weight: 700; color: var(--accent); margin-bottom: 0.25rem;">20 April 2026 </div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">
+                            Prajurit Yonif TP 826/BTB Mendapatkan Juara 1 Under 21 Komite - 75 KG Putra Seleksi Nasional KKI 2026
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="font-weight: 700; color: var(--accent); margin-bottom: 0.25rem;">17 Agustus 2024</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">
+                            Prajurit Yonif TP 826/BTB Melaksanakan PAM Kunjungan RI 1 di kawasan IKN Nusantara.
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; color: var(--accent); margin-bottom: 0.25rem;">10 November 2024</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">
+                            Penerimaan Tunggul Batalyon "Benuo Taka Bekerai" dari Panglima Kodam VI/Mulawarman.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Prestasi & Penghargaan</h3>
+                <div class="list-item">
+                    <span>Satuan Terbaik Pembinaan Teritorial</span>
+                    <span style="color: var(--accent); font-weight: 600;">Kodam VI/MLW 2025</span>
+                </div>
+                <div class="list-item">
+                    <span>Kolaborasi Prajurit Yonif TP 826/BTB Dalam rangka Kegiatan Ketahanan Pangan di Kab. Penajam Paser Utara </span>
+                    <span style="color: var(--accent); font-weight: 600;">Ketahanan Pangan</span>
+                </div>
+                <div class="list-item">
+                    <span>Penghargaan Kasad Bidang Ketahanan Pangan</span>
+                    <span style="color: var(--accent); font-weight: 600;">2025</span>
+                </div>
+                <div class="list-item">
+                    <span>Prajurit Yonif TP 826/BTB Mendapatkan Juara 1 Under 21 Komite - 75 KG Putra Seleksi Nasional KKI 2026</span>
+                    <span style="color: var(--accent); font-weight: 600;">Tingkat Nasional</span>
+                </div>
+                <div class="list-item" style="border: none;">
+                    <span>Prajurit Yonif TP 826/BTB ikut serta dalam Tugas Bantuan Personel Satgas RI-PNG Mobile Yonif 611/AWL</span>
+                    <span style="color: var(--accent); font-weight: 600;">BP Satgas RI-PNG Mobile Yonif 611/AWL </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">Daftar Komandan Batalyon</h3>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border); text-align: left;">
+                            <th style="padding: 0.75rem;">No</th>
+                            <th style="padding: 0.75rem;">Nama</th>
+                            <th style="padding: 0.75rem;">Pangkat</th>
+                            <th style="padding: 0.75rem;">Periode</th>
+                            <th style="padding: 0.75rem;">Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 0.75rem; font-weight: 600;">1</td>
+                            <td style="padding: 0.75rem;">Sulaiman S.I.P M.Han</td>
+                            <td style="padding: 0.75rem;">Letkol Inf</td>
+                            <td style="padding: 0.75rem;">Mar 2025 - Sekarang</td>
+                            <td style="padding: 0.75rem;"><span style="background: var(--emas-light); color: var(--accent); padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Aktif</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 1rem; font-style: italic;">
+                * Data akan diupdate seiring pergantian kepemimpinan satuan
+            </p>
+        </div>
+    </div>
+            <!-- HALAMAN STRUKTUR ORGANISASI -->
+    <div id="struktur" class="page">
+        <h2 class="page-title">Struktur Organisasi</h2>
+        <p class="page-desc">Susunan organisasi dan pejabat utama Yonif TP 826/Benuo Taka Bekerai</p>
+        
+        <div class="card" style="margin-bottom: 1.75rem; text-align: center;">
+            <h3 class="card-title" style="margin-bottom: 1.5rem;">Bagan Struktur Komando</h3>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <!-- Danyon -->
+                <div style="background: var(--accent); color: white; padding: 1rem 2rem; border-radius: var(--radius-md); font-weight: 700; box-shadow: var(--shadow);">
+                    KOMANDAN BATALYON
+                </div>
+                <div style="width: 2px; height: 24px; background: var(--border);"></div>
+                
+                <!-- Wadanyon + Staf -->
+                <div style="display: flex; gap: 3rem; position: relative;">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: calc(100% + 3rem); height: 2px; background: var(--border);"></div>
+                    <div style="background: var(--emas-light); color: var(--accent); padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; border: 2px solid var(--accent);">
+                        WADANYON
+                    </div>
+                    <div style="background: white; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; border: 2px solid var(--border);">
+                        PERWIRA STAF
+                    </div>
+                </div>
+                <div style="width: 2px; height: 24px; background: var(--border);"></div>
+                
+                <!-- Kompi -->
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; max-width: 800px;">
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KIMA</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KIPAN A</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KIPAN B</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KIPAN C</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KI BANT</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KI PETERNAKAN</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KI PERTANIAN</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KI ZENI</div>
+        <div style="background: var(--bg); padding: 0.75rem 1rem; border-radius: var(--radius-md); font-weight: 600; border: 1px solid var(--border); font-size: 0.875rem;">KI MEDIS</div>
+    </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.75rem;">
+            <h3 class="card-title">Pejabat Utama</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <!-- Danyon -->
+                <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--emas-light); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🎖️</div>
+                    <div style="font-weight: 700; font-size: 1rem;">Letkol Inf Sulaiman S.I.P M.Han</div>
+                    <div style="color: var(--accent); font-weight: 600; font-size: 0.875rem; margin: 0.25rem 0;">Komandan Batalyon</div>
+                    <div style="color: var(--text-secondary); font-size: 0.75rem;">NRP XXXXXXX </div>
+                </div>
+                
+                <!-- Wadanyon -->
+                <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--emas-light); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">⭐</div>
+                    <div style="font-weight: 700; font-size: 1rem;">Mayor Inf Mochamad Chamim</div>
+                    <div style="color: var(--accent); font-weight: 600; font-size: 0.875rem; margin: 0.25rem 0;">Wakil Komandan Batalyon</div>
+                    <div style="color: var(--text-secondary); font-size: 0.75rem;">NRP XXXXXXXXX </div>
+                </div>
+
+                <!-- Pasi Intel -->
+                <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--emas-light); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🔍</div>
+                    <div style="font-weight: 700; font-size: 1rem;">Letda Inf Febrianto</div>
+                    <div style="color: var(--accent); font-weight: 600; font-size: 0.875rem; margin: 0.25rem 0;">Pasi Intel</div>
+                    <div style="color: var(--text-secondary); font-size: 0.75rem;">NRP XXXXXXXXX </div>
+                </div>
+
+                <!-- Pasi Ops -->
+                <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--emas-light); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">⚔️</div>
+                    <div style="font-weight: 700; font-size: 1rem;">Kapten Inf Eranio S. Tr Han</div>
+                    <div style="color: var(--accent); font-weight: 600; font-size: 0.875rem; margin: 0.25rem 0;">Pasi Ops</div>
+                    <div style="color: var(--text-secondary); font-size: 0.75rem;">NRP XXXXXXXXX </div>
+                </div>
+
+                <!-- Pasi Pers -->
+                <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--emas-light); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">👥</div>
+                    <div style="font-weight: 700; font-size: 1rem;">Kapten Inf Agus Riyanto</div>
+                    <div style="color: var(--accent); font-weight: 600; font-size: 0.875rem; margin: 0.25rem 0;">Pasi Pers</div>
+                    <div style="color: var(--text-secondary); font-size: 0.75rem;">NRP XXXXXXXXX </div>
+                </div>
+
+                <!-- Pasi Log -->
+                <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: var(--emas-light); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">📦</div>
+                    <div style="font-weight: 700; font-size: 1rem;">Letda CZI Rukmana Aprisal</div>
+                    <div style="color: var(--accent); font-weight: 600; font-size: 0.875rem; margin: 0.25rem 0;">Pasi Log</div>
+                    <div style="color: var(--text-secondary); font-size: 0.75rem;">NRP XXXXXXXXX </div>
+                </div>
+            </div>
+        </div>
+
+                <div class="card">
+        <h3 class="card-title">Komandan Kompi</h3>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border); text-align: left;">
+                        <th style="padding: 0.75rem;">Satuan</th>
+                        <th style="padding: 0.75rem;">Nama Komandan</th>
+                        <th style="padding: 0.75rem;">Pangkat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Kima</td>
+                        <td style="padding: 0.75rem;">Letda Inf Miftahul</td>
+                        <td style="padding: 0.75rem;">Letda</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Kipan A</td>
+                        <td style="padding: 0.75rem;">Kapten Inf Budi Hernawan</td>
+                        <td style="padding: 0.75rem;">Kapten</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Kipan B</td>
+                        <td style="padding: 0.75rem;">Kapten Inf Adhie </td>
+                        <td style="padding: 0.75rem;">Kapten</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Kipan C</td>
+                        <td style="padding: 0.75rem;">Kapten Inf Bagus Aji</td>
+                        <td style="padding: 0.75rem;">Kapten</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Ki Bant</td>
+                        <td style="padding: 0.75rem;">Letda Inf Hamdan Anwar</td>
+                        <td style="padding: 0.75rem;">Letda</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Ki Pertanian</td>
+                        <td style="padding: 0.75rem;">Letda Inf Latief</td>
+                        <td style="padding: 0.75rem;">Letda</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Ki Peternakan</td>
+                        <td style="padding: 0.75rem;">Letda Inf Rusli Ikhsan</td>
+                        <td style="padding: 0.75rem;">Letda</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 0.75rem; font-weight: 600;">Ki Zeni</td>
+                        <td style="padding: 0.75rem;">Kapten Czi Hadi</td>
+                        <td style="padding: 0.75rem;">Kapten</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; font-weight: 600;">Ki Medis</td>
+                        <td style="padding: 0.75rem;">Kapten Ckm Hendar Juliana S.Farm</td>
+                        <td style="padding: 0.75rem;">Kapten</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+                <!-- HALAMAN KEGIATAN - TIMELINE FORMAT -->
+                <div id="kegiatan" class="page">
+                    <h2 class="page-title">Kegiatan & Agenda</h2>
+                    <p class="page-desc">Daftar lengkap kegiatan, latihan, dan agenda Yonif TP 826/BTB</p>
+                    
+                    <div class="kegiatan-intro">
+                        <div class="kegiatan-summary-card">
+                            <div style="display:flex; gap:1rem; align-items:flex-start;">
+                                <div class="badge">✨</div>
+                                <div>
+                                    <h3 class="card-title" style="margin:0 0 0.35rem 0;">Sorotan Kegiatan</h3>
+                                    <p style="color: var(--text-secondary); margin:0;">Highlight program unggulan dan aksi satuan terbaru.</p>
+                                </div>
+                            </div>
+                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:0.85rem;">
+                                <div class="kegiatan-metric"><div class="kegiatan-metric-value">5+</div><div class="kegiatan-metric-label">Program aktif</div></div>
+                                <div class="kegiatan-metric"><div class="kegiatan-metric-value">3</div><div class="kegiatan-metric-label">Kategori</div></div>
+                                <div class="kegiatan-metric"><div class="kegiatan-metric-value">1</div><div class="kegiatan-metric-label">Event nasional</div></div>
+                                <div class="kegiatan-metric"><div class="kegiatan-metric-value">100%</div><div class="kegiatan-metric-label">Komitmen</div></div>
+                            </div>
+                        </div>
+                        <div class="kegiatan-summary-card">
+                            <h3 class="card-title" style="margin-bottom:0.75rem;">Alur Kegiatan</h3>
+                            <p style="color: var(--text-secondary); line-height:1.8; margin-bottom:1rem;">Setiap program dirancang untuk mendukung kesiapan operasional, pemberdayaan masyarakat, dan ketahanan wilayah. Lihat kategori untuk fokus sesuai jenis kegiatan.</p>
+                            <div style="display:grid; gap:0.8rem;">
+                                <div style="display:flex; align-items:center; gap:0.75rem;
+                                    background: rgba(58,95,70,0.08); padding:0.85rem 1rem; border-radius:14px;">
+                                    <span style="font-size:1.25rem;">🟢</span>
+                                    <div><strong>Persiapan</strong><br><span style="color: var(--text-secondary); font-size:0.85rem;">Perencanaan dan briefing sebelum kegiatan.</span></div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:0.75rem;
+                                    background: rgba(197,165,114,0.13); padding:0.85rem 1rem; border-radius:14px;">
+                                    <span style="font-size:1.25rem;">⚔️</span>
+                                    <div><strong>Pelaksanaan</strong><br><span style="color: var(--text-secondary); font-size:0.85rem;">Eksekusi sesuai standar keselamatan dan efektivitas.</span></div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:0.75rem;
+                                    background: rgba(255,59,48,0.12); padding:0.85rem 1rem; border-radius:14px;">
+                                    <span style="font-size:1.25rem;">📊</span>
+                                    <div><strong>Evaluasi</strong><br><span style="color: var(--text-secondary); font-size:0.85rem;">Review hasil untuk peningkatan kegiatan berikutnya.</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                        <button onclick="filterKegiatan('semua')" class="filter-btn active" style="padding: 0.65rem 1.35rem; border-radius: 999px; background: var(--accent); color: white; font-weight: 600; cursor: pointer;">Semua</button>
+                        <button onclick="filterKegiatan('latihan')" class="filter-btn" style="padding: 0.65rem 1.35rem; border-radius: 999px; background: transparent; color: var(--text-primary); font-weight: 600; cursor: pointer;">Latihan</button>
+                        <button onclick="filterKegiatan('operasional')" class="filter-btn" style="padding: 0.65rem 1.35rem; border-radius: 999px; background: transparent; color: var(--text-primary); font-weight: 600; cursor: pointer;">Operasional</button>
+                        <button onclick="filterKegiatan('sosial')" class="filter-btn" style="padding: 0.65rem 1.35rem; border-radius: 999px; background: transparent; color: var(--text-primary); font-weight: 600; cursor: pointer;">Sosial</button>
+                    </div>
+
+                    <!-- TIMELINE KEGIATAN -->
+                    <div style="border-left: 3px solid var(--accent); padding-left: 0;">
+                        
+                        <!-- KEGIATAN 1 - LATBAKPURLAN -->
+                        <div class="kegiatan-item" data-kategori="latihan">
+                            <div style="display: flex; gap: 2rem;">
+                                <div style="position: relative; width: 30px; flex-shrink: 0; margin-top: 0.5rem;">
+                                    <div style="width: 12px; height: 12px; background: var(--accent); border: 3px solid white; border-radius: 50%; position: absolute; left: -19px; top: -6px; box-shadow: 0 0 0 3px var(--accent);"></div>
+                                </div>
+                                <div class="card" style="flex: 1; animation: none;">
+                                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                        <h3 class="card-title" style="margin: 0;">LATBAKPURLAN</h3>
+                                        <span style="background: rgba(58,95,70,0.15); color: var(--accent); padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">LATIHAN</span>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem;">
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📅 Tanggal:</span><br><strong>22 April 2026</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📍 Lokasi:</span><br><strong>Lapangan Tembak Satuan</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">👥 Peserta:</span><br><strong>Seluruh Prajurit</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">🎯 Durasi:</span><br><strong>1 Minggu</strong></div>
+                                    </div>
+                                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                                        <strong>Deskripsi:</strong> Latihan Menembak Tempur Lanjutan (LATBAKPURLAN) merupakan pelatihan intensif untuk meningkatkan kemampuan tempur perorangan dan satuan. Kegiatan ini meliputi latihan taktis, penguasaan senjata, dan teknik pertempuran modern. Dengan semangat pantang menyerah, seluruh prajurit Yonif TP 826/BTB mengikuti program ini sebagai bagian dari pembinaan kemampuan operasional satuan.
+                                    </p>
+                                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                        <span style="background: var(--emas-light); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🎖️ Kompetensi Tempur</span>
+                                        <span style="background: var(--emas-light); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">⚔️ Taktis</span>
+                                        <span style="background: var(--emas-light); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🔫 Penguasaan Senjata</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KEGIATAN 2 - PANEN BERSAMA -->
+                        <div class="kegiatan-item" data-kategori="sosial">
+                            <div style="display: flex; gap: 2rem;">
+                                <div style="position: relative; width: 30px; flex-shrink: 0; margin-top: 0.5rem;">
+                                    <div style="width: 12px; height: 12px; background: var(--accent); border: 3px solid white; border-radius: 50%; position: absolute; left: -19px; top: -6px; box-shadow: 0 0 0 3px var(--accent);"></div>
+                                </div>
+                                <div class="card" style="flex: 1; animation: none;">
+                                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                        <h3 class="card-title" style="margin: 0;">Panen Cabai Bersama</h3>
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">SOSIAL</span>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem;">
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📅 Tanggal:</span><br><strong>20 April 2026</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📍 Lokasi:</span><br><strong>Lahan Ketahanan Pangan</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">👥 Peserta:</span><br><strong>Prajurit & Masyarakat</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">🌾 Hasil:</span><br><strong>Beberapa Ton Cabai</strong></div>
+                                    </div>
+                                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                                        <strong>Deskripsi:</strong> Program Ketahanan Pangan Yonif TP 826/BTB mencapai hasil panen yang gemilang. Dengan moto "Merahnya Cabai, Eratnya Persaudaraan", prajurit satuan bekerja bersama dengan petani dan masyarakat lokal untuk memanen cabai dari lahan demonstrasi pertanian. Hasil panen didistribusikan kepada masyarakat dan warga logistik satuan sebagai wujud nyata dukungan terhadap ketahanan pangan nasional.
+                                    </p>
+                                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🌾 Pertanian</span>
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🤝 Gotong Royong</span>
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🥬 Ketahanan Pangan</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KEGIATAN 3 - BALIKPAPAN COASTAL RUNNING -->
+                        <div class="kegiatan-item" data-kategori="operasional">
+                            <div style="display: flex; gap: 2rem;">
+                                <div style="position: relative; width: 30px; flex-shrink: 0; margin-top: 0.5rem;">
+                                    <div style="width: 12px; height: 12px; background: var(--accent); border: 3px solid white; border-radius: 50%; position: absolute; left: -19px; top: -6px; box-shadow: 0 0 0 3px var(--accent);"></div>
+                                </div>
+                                <div class="card" style="flex: 1; animation: none;">
+                                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                        <h3 class="card-title" style="margin: 0;">Balikpapan Coastal Running 2026</h3>
+                                        <span style="background: rgba(255,59,48,0.15); color: #FF3B30; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">OLAHRAGA</span>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem;">
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📅 Tanggal:</span><br><strong>3 Mei 2026</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📍 Lokasi:</span><br><strong>Balikpapan</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">🏆 Prestasi:</span><br><strong>Juara 1 & Juara 3</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">🏃 Skala:</span><br><strong>Se-Kalimantan</strong></div>
+                                    </div>
+                                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                                        <strong>Deskripsi:</strong> Prajurit Yonif TP 826/BTB meraih prestasi gemilang dalam event lari Balikpapan Coastal Running 2026. Serda Robby Ikbal Siergar berhasil meraih Juara 1, sementara Serda Sejati Ginting meraih Juara 3 dalam kategorinya. Prestasi ini menunjukkan komitmen satuan terhadap pengembangan SDM dan representasi TNI di tingkat regional. Event ini menjadi momentum untuk menunjukkan semangat, disiplin, dan dedikasi prajurit dalam setiap aspek kehidupan.
+                                    </p>
+                                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                        <span style="background: rgba(255,59,48,0.15); color: #FF3B30; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🏅 Prestasi</span>
+                                        <span style="background: rgba(255,59,48,0.15); color: #FF3B30; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">⚡ Kebugaran</span>
+                                        <span style="background: rgba(255,59,48,0.15); color: #FF3B30; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🌊 Event Regional</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KEGIATAN 4 - KOMITMEN TERITORIAL -->
+                        <div class="kegiatan-item" data-kategori="sosial">
+                            <div style="display: flex; gap: 2rem;">
+                                <div style="position: relative; width: 30px; flex-shrink: 0; margin-top: 0.5rem;">
+                                    <div style="width: 12px; height: 12px; background: var(--accent); border: 3px solid white; border-radius: 50%; position: absolute; left: -19px; top: -6px; box-shadow: 0 0 0 3px var(--accent);"></div>
+                                </div>
+                                <div class="card" style="flex: 1; animation: none;">
+                                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                        <h3 class="card-title" style="margin: 0;">Komsos & Bakti TNI</h3>
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">SOSIAL</span>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem;">
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📅 Periode:</span><br><strong>Berkelanjutan</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📍 Area:</span><br><strong>Penajam Paser Utara</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">👥 Jangkauan:</span><br><strong>Ribuan Warga</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">🎯 Fokus:</span><br><strong>Pemberdayaan</strong></div>
+                                    </div>
+                                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                                        <strong>Deskripsi:</strong> Program Komunikasi Sosial dan Bakti TNI merupakan komitmen utama Yonif TP 826/BTB dalam menjalankan tugas pembinaan teritorial. Melalui TMMD, bedah rumah tidak layak huni, perbaikan infrastruktur desa, dan berbagai program sosial lainnya, satuan terus berupaya menciptakan ruang dan alat juang yang tangguh di wilayah. Setiap kegiatan dirancang untuk meningkatkan kesejahteraan masyarakat dan memperkuat hubungan TNI-rakyat.
+                                    </p>
+                                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🏗️ Infrastruktur</span>
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">❤️ Komunitas</span>
+                                        <span style="background: rgba(197,165,114,0.2); color: #B8860B; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🤝 Territorialitas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KEGIATAN 5 - PELATIHAN BELA NEGARA -->
+                        <div class="kegiatan-item" data-kategori="latihan">
+                            <div style="display: flex; gap: 2rem;">
+                                <div style="position: relative; width: 30px; flex-shrink: 0; margin-top: 0.5rem;">
+                                    <div style="width: 12px; height: 12px; background: var(--accent); border: 3px solid white; border-radius: 50%; position: absolute; left: -19px; top: -6px; box-shadow: 0 0 0 3px var(--accent);"></div>
+                                </div>
+                                <div class="card" style="flex: 1; animation: none;">
+                                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                        <h3 class="card-title" style="margin: 0;">Pelatihan Wawasan Kebangsaan</h3>
+                                        <span style="background: rgba(58,95,70,0.15); color: var(--accent); padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">LATIHAN</span>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem;">
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📅 Periode:</span><br><strong>Tiap Bulan</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">📍 Lokasi:</span><br><strong>Markas Satuan</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">👥 Peserta:</span><br><strong>Prajurit & Masyarakat</strong></div>
+                                        <div><span style="color: var(--text-secondary); font-weight: 500;">🎓 Materi:</span><br><strong>4 Pilar Kebangsaan</strong></div>
+                                    </div>
+                                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                                        <strong>Deskripsi:</strong> Program pelatihan wawasan kebangsaan dirancang untuk meningkatkan kesadaran bela negara dan nasionalisme baik bagi prajurit maupun masyarakat sipil. Melalui sosialisasi Pancasila, UUD 1945, NKRI, dan Bhinneka Tunggal Ika, satuan berupaya memperkuat fondasi ideologi nasional dan semangat cinta tanah air. Kegiatan ini menjadi bagian integral dari strategi penguatan nilai-nilai kebangsaan di wilayah teritorial.
+                                    </p>
+                                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                        <span style="background: var(--emas-light); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🏛️ Ideologi</span>
+                                        <span style="background: var(--emas-light); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">🇮🇩 Nasionalisme</span>
+                                        <span style="background: var(--emas-light); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">📚 Edukasi</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- INFORMASI TAMBAHAN -->
+                    <div class="card" style="margin-top: 2.5rem;">
+                        <h3 class="card-title">Tentang Kegiatan Satuan</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                            Halaman Kegiatan menampilkan daftar lengkap aktivitas operasional, pelatihan, dan program sosial yang dijalankan Yonif TP 826/BTB. Setiap kegiatan dirancang dengan cermat untuk mendukung tugas pokok satuan dalam melaksanakan Operasi Militer Selain Perang (OMSP) dengan fokus pada pembinaan teritorial, ketahanan pangan, dan pemberdayaan masyarakat.
+                        </p>
+                        <p style="color: var(--text-secondary); line-height: 1.8;">
+                            Kategori kegiatan dibagi menjadi <strong>Latihan</strong> (pengembangan kompetensi), <strong>Operasional</strong> (tugas dan misi), dan <strong>Sosial</strong> (pembinaan masyarakat). Untuk informasi lebih lanjut atau partisipasi dalam kegiatan, silakan hubungi Tim Operasional atau Pasi Pers melalui kontak resmi satuan.
+                        </p>
+                    </div>
+                </div>
+                <div id="galeri" class="page">
+                    <h2 class="page-title">Galeri</h2>
+                    <p class="page-desc">Dokumentasi kegiatan dan momen penting Yonif TP 826/BTB</p>
+                    
+                    <div class="galeri-grid">
+                        <!-- FOTO 1 - Ganti nama file & deskripsi sesuai kebutuhan -->
+                        <div class="galeri-item">
+                            <img src="gambar/foto1.jpeg" alt="Foto 1" class="galeri-img">
+                            <div class="galeri-overlay">
+                                <div class="galeri-title">Balikpapan Coastal Running</div>
+                                <div class="galeri-caption">Prajurit Yonif TP 826/BTB meraih prestasi di event lari se-Kalimantan</div>
+                            </div>
+                        </div>
+
+                        <!-- FOTO 2 - Ganti nama file & deskripsi sesuai kebutuhan -->
+                        <div class="galeri-item">
+                            <img src="gambar/foto2.jpeg" alt="Foto 2" class="galeri-img">
+                            <div class="galeri-overlay">
+                                <div class="galeri-title">LATBAKPURLAN</div>
+                                <div class="galeri-caption">Latihan Menembak Tempur Lanjutan di Lapangan Tembak Satuan</div>
+                            </div>
+                        </div>
+
+                        <!-- FOTO 3 - Ganti nama file & deskripsi sesuai kebutuhan -->
+                        <div class="galeri-item">
+                            <img src="gambar/foto3.jpeg" alt="Foto 3" class="galeri-img">
+                            <div class="galeri-overlay">
+                                <div class="galeri-title">Panen Cabai Bersama</div>
+                                <div class="galeri-caption">Program Ketahanan Pangan - Merahnya Cabai, Eratnya Persaudaraan</div>
+                            </div>
+                        </div>
+
+                        <!-- FOTO 4 - Ganti nama file & deskripsi sesuai kebutuhan -->
+                        <div class="galeri-item">
+                            <img src="gambar/foto4.jpg" alt="Foto 4" class="galeri-img">
+                            <div class="galeri-overlay">
+                                <div class="galeri-title">Markas Satuan</div>
+                                <div class="galeri-caption">Markas Yonif TP 826/BTB di Penajam Paser Utara</div>
+                            </div>
+                        </div>
+
+                        <!-- FOTO 5 - Ganti nama file & deskripsi sesuai kebutuhan -->
+                        <div class="galeri-item">
+                            <img src="gambar/foto5.png" alt="Foto 5" class="galeri-img">
+                            <div class="galeri-overlay">
+                                <div class="galeri-title">Kegiatan Satuan</div>
+                                <div class="galeri-caption">Dokumentasi kegiatan operasional Yonif TP 826/BTB</div>
+                            </div>
+                        </div>
+
+                        <!-- FOTO 6 - Ganti nama file & deskripsi sesuai kebutuhan -->
+                        <div class="galeri-item">
+                            <img src="gambar/foto6.png" alt="Foto 6" class="galeri-img">
+                            <div class="galeri-overlay">
+                                <div class="galeri-title">Prestasi Prajurit</div>
+                                <div class="galeri-caption">Pencapaian dan dedikasi prajurit Yonif TP 826/BTB</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KETERANGAN TAMBAHAN -->
+                    <div class="card" style="margin-top: 2.5rem;">
+                        <h3 class="card-title">Tentang Galeri</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                            Galeri ini menampilkan dokumentasi visual dari berbagai kegiatan dan pencapaian Batalyon Infanteri Territoril Pembangunan 826/Benuo Taka Bekerai. Setiap foto merepresentasikan dedikasi dan semangat prajurit dalam menjalankan tugas pokok melayani masyarakat dan menjaga kedaulatan NKRI.
+                        </p>
+                        <p style="color: var(--text-secondary); line-height: 1.8;">
+                            Untuk mengirimkan foto atau dokumentasi kegiatan Anda, silakan hubungi Tim Cyber melalui <strong>cyberyoniftp826@gmail.com</strong> atau WhatsApp <strong>088226513972</strong>.
+                        </p>
+                    </div>
+                </div>
+                <!-- LAYANAN PENGADUAN DETAIL -->
+    <div id="pengaduan" class="page">
+        <h2 class="page-title">Layanan Pengaduan</h2>
+        <p class="page-desc">Sampaikan laporan, saran, atau pengaduan Anda kepada Yonif TP 826/BTB. Identitas pelapor dijamin kerahasiaannya.</p>
+
+        <!-- ALUR PENGADUAN -->
+        <div class="card">
+            <h3 class="card-title">Alur Penanganan Pengaduan</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                <div style="text-align: center;">
+                    <div style="width: 50px; height: 50px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; font-weight: 800; font-size: 1.2rem;">1</div>
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Lapor</h4>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">Isi form pengaduan lengkap dengan bukti pendukung</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 50px; height: 50px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; font-weight: 800; font-size: 1.2rem;">2</div>
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Verifikasi</h4>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">Tim Staf Intel/Si Intelpam verifikasi 1x24 jam</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 50px; height: 50px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; font-weight: 800; font-size: 1.2rem;">3</div>
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Tindak Lanjut</h4>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">Disposisi ke bagian terkait & investigasi</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 50px; height: 50px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; font-weight: 800; font-size: 1.2rem;">4</div>
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Umpan Balik</h4>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">Pelapor dapat info perkembangan via WA/Email</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.75rem;">
+            <!-- FORM PENGADUAN -->
+            <div class="card">
+                <h3 class="card-title">Form Pengaduan Online</h3>
+                <form id="formPengaduan" onsubmit="kirimPengaduan(event)">
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+        <div>
+            <label style="display:block;font-weight:600;margin-bottom:0.5rem;">Nama Lengkap *</label>
+            <input id="nama" type="text" required placeholder="Nama sesuai KTP"
+                style="width:100%;padding:0.75rem;border:1px solid var(--border);border-radius:var(--radius-md);">
+        </div>
+
+        <div>
+            <label style="display:block;font-weight:600;margin-bottom:0.5rem;">No HP / WA *</label>
+            <input id="hp" type="tel" required placeholder="08xxxxxxxxxx"
+                style="width:100%;padding:0.75rem;border:1px solid var(--border);border-radius:var(--radius-md);">
+        </div>
+    </div>
+
+    <div style="margin-bottom:1rem;">
+        <label>Email</label>
+        <input id="email" type="email" placeholder="email@contoh.com"
+            style="width:100%;padding:0.75rem;border:1px solid var(--border);border-radius:var(--radius-md);">
+    </div>
+
+    <div style="margin-bottom:1rem;">
+        <label>Kategori *</label>
+        <select id="kategori" required
+            style="width:100%;padding:0.75rem;border:1px solid var(--border);border-radius:var(--radius-md);">
+            <option value="">-- Pilih Kategori --</option>
+            <option value="Disiplin">Pelanggaran Disiplin</option>
+            <option value="Pelayanan">Pelayanan Publik</option>
+            <option value="Keamanan">Gangguan Keamanan</option>
+            <option value="Penyalahgunaan">Penyalahgunaan Wewenang</option>
+            <option value="Sarpras">Sarana & Prasarana</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom:1rem;">
+        <label>Subjek *</label>
+        <input id="subjek" type="text" required
+            style="width:100%;padding:0.75rem;border:1px solid var(--border);border-radius:var(--radius-md);">
+    </div>
+
+    <div style="margin-bottom:1rem;">
+        <label>Uraian *</label>
+        <textarea id="uraian" required rows="6"
+            style="width:100%;padding:0.75rem;border:1px solid var(--border);border-radius:var(--radius-md);"></textarea>
+    </div>
+
+    <button type="submit"
+        style="width:100%;background:var(--accent);color:white;border:none;padding:0.875rem;border-radius:var(--radius-md);font-weight:700;">
+        Kirim Pengaduan
+    </button>
+
+</form>
+            </div>
+
+            <!-- KONTAK DARURAT & INFO -->
+            <div>
+                <div class="card">
+                    <h3 class="card-title">Kontak Darurat</h3>
+                    <div class="list-item"><span>Siaga 24 Jam</span><span style="font-weight: 700; color: var(--accent);">XXXXX</span></div>
+                    <div class="list-item"><span>Piket Jaga</span><span style="font-weight: 700; color: var(--accent);">088XXXXXX</span></div>
+                    <div class="list-item"><span>WhatsApp</span><span style="font-weight: 700; color: var(--accent);">0882XXXXX</span></div>
+                    <div class="list-item"><span>Email Resmi</span><span>cyberyoniftp826@gmail.com</span></div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">FAQ Pengaduan</h3>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">Berapa lama ditindaklanjuti?</div>
+                        <div class="accordion-content">Pengaduan diverifikasi maks 1x24 jam. Tindak lanjut sesuai tingkat kompleksitas, rata-rata 3-7 hari kerja.</div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">Apakah bisa anonim?</div>
+                        <div class="accordion-content">Bisa. Kosongkan nama & gunakan email samaran. Tapi cantumkan No HP agar bisa kami hubungi untuk klarifikasi.</div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">Bisa lapor langsung?</div>
+                        <div class="accordion-content">Bisa. Datang ke Ruang Piket Jaga Makoyonif 826/BTB di Jl. Simpang PLN Gersik, Penajam. Jam kerja 08.00-15.00 WITA.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                <div id="kontak" class="page">
+    <h2 class="page-title">Kontak Yonif TP 826/BTB</h2>
+    <p class="page-desc">
+        Hubungi kami untuk informasi, koordinasi, maupun layanan pengaduan resmi.
+    </p>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;">
+
+        <!-- INFO KONTAK -->
+        <div class="card">
+            <h3 class="card-title">Informasi Kontak</h3>
+
+            <div class="list-item">
+                <span>Alamat MaYonif</span>
+                <span>Jl. Simpang PLN Gersik, Penajam, Penajam Paser Utara 76116</span>
+            </div>
+
+            <div class="list-item">
+                <span>Telepon</span>
+                <span>088226513972</span>
+            </div>
+
+            <div class="list-item">
+                <span>WhatsApp</span>
+                <span>088226513972</span>
+            </div>
+
+            <div class="list-item">
+                <span>Email</span>
+                <span>cyberyoniftp826@gmail.com</span>
+            </div>
+
+            <div class="list-item">
+                <span>Jam Operasional</span>
+                <span>Senin - Jumat | 08.00 - 15.00 WITA</span>
+            </div>
+        </div>
+
+        <!-- QUICK ACTION -->
+        <div class="card">
+            <h3 class="card-title">Aksi Cepat</h3>
+
+            <button onclick="window.location.href='mailto:cyberyoniftp826@gmail.com'"
+                style="width:100%;margin-bottom:1rem;padding:0.85rem;border:none;border-radius:var(--radius-md);background:var(--accent);color:white;font-weight:700;cursor:pointer;">
+                Kirim Email
+            </button>
+
+            <button onclick="window.open('https://wa.me/6288226513972?text=Halo%20Tim%20Cyber%20Yonif%20826/BTB,%20saya%20ingin%20bertanya','_blank')"
+style="width:100%;padding:0.85rem;border:none;border-radius:var(--radius-md);background:#25D366;color:white;font-weight:700;cursor:pointer;">
+    Chat WhatsApp
+</button>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+    <!-- MODAL DETAIL PENGADUAN -->
+    <div id="modalDetail" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+        <div style="background: white; border-radius: var(--radius-lg); max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-weight: 700; font-size: 1.2rem;">Detail Pengaduan #<span id="modalId"></span></h3>
+                <button onclick="tutupModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+            </div>
+            <div style="padding: 1.5rem;">
+                <div class="list-item"><span>Tanggal Masuk</span><span id="modalTanggal"></span></div>
+                <div class="list-item"><span>Nama Pelapor</span><span id="modalNama"></span></div>
+                <div class="list-item"><span>No. HP/WA</span><span id="modalHp"></span></div>
+                <div class="list-item"><span>Email</span><span id="modalEmail"></span></div>
+                <div class="list-item"><span>Kategori</span><span id="modalKategori"></span></div>
+                <div class="list-item"><span>Status</span><span id="modalStatus"></span></div>
+                <div style="margin-top: 1rem;">
+                    <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Subjek:</h4>
+                    <p id="modalSubjek" style="background: var(--bg); padding: 0.75rem; border-radius: var(--radius-md);"></p>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Uraian Lengkap:</h4>
+                    <p id="modalUraian" style="background: var(--bg); padding: 0.75rem; border-radius: var(--radius-md); white-space: pre-wrap; line-height: 1.6;"></p>
+                </div>
+                <div style="margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+                    <h4 style="font-weight: 600; margin-bottom: 0.75rem;">Update Status Pengaduan</h4>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <select id="updateStatus" style="flex: 1; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-md); font-family: inherit;">
+                            <option value="Baru">Baru</option>
+                            <option value="Diproses">Diproses</option>
+                            <option value="Selesai">Selesai</option>
+                        </select>
+                        <button onclick="simpanStatus()" style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; cursor: pointer;">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div class="footer-logos">
+                    <img src="gambar/logo-kartika-eka-paksi.png" alt="Logo Kartika Eka Paksi">
+                    <img src="gambar/logo-satuan.png" alt="Logo Yonif TP 826/BTB">
+                </div>
+                <p><strong>YONIF TP 826/BENUO TAKA BEKERAI</strong></p>
+                <p>BRIGADE INFANTERI TP 85/BENUO TAKA CAKTI</p>
+                <p style="margin-top:0.5rem; font-size:0.75rem;">©️ 2026 Tim Cyber Yonif 826/BTB. All Rights Reserved.</p>
+            </footer>
+        </main>
+
+        <script>
+            const body = document.querySelector('body');
+
+            function showPage(evt, pageName) {
+                const navItem = evt && evt.currentTarget
+                    ? evt.currentTarget
+                    : document.querySelector(`.nav-item[onclick="showPage(event, '${pageName}')"]`);
+
+                // Animasi Ripple untuk klik langsung, jika tersedia
+                if (evt && navItem) {
+                    const circle = document.createElement("span");
+                    const diameter = Math.max(navItem.clientWidth, navItem.clientHeight);
+                    const radius = diameter / 2;
+                    circle.style.width = circle.style.height = `${diameter}px`;
+                    circle.style.left = `${evt.clientX - navItem.getBoundingClientRect().left - radius}px`;
+                    circle.style.top = `${evt.clientY - navItem.getBoundingClientRect().top - radius}px`;
+                    circle.classList.add("ripple");
+                    navItem.appendChild(circle);
+                    setTimeout(() => circle.remove(), 600);
+                }
+
+                // Ganti Halaman dengan transisi halus
+                const currentPage = document.querySelector('.page.active');
+                const newPage = document.getElementById(pageName);
+
+                if (currentPage && currentPage !== newPage) {
+                    currentPage.style.opacity = '0';
+                    currentPage.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        newPage.classList.add('active');
+                        if (navItem) navItem.classList.add('active');
+                    }, 150);
+                } else {
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    newPage.classList.add('active');
+                    if (navItem) navItem.classList.add('active');
+                }
+
+                // Aktifkan background pattern cuma di beranda
+                body.classList.toggle('active', pageName === 'beranda');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Fungsi Accordion
+            function toggleAccordion(header) {
+                const content = header.nextElementSibling;
+                header.classList.toggle('active');
+                content.classList.toggle('active');
+            }
+
+            // Fungsi Filter Kegiatan
+            function filterKegiatan(kategori) {
+                const items = document.querySelectorAll('.kegiatan-item');
+                const buttons = document.querySelectorAll('.filter-btn');
+                
+                items.forEach(item => {
+                    if (kategori === 'semua' || item.getAttribute('data-kategori') === kategori) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                buttons.forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+
+            // Set pattern aktif pas load pertama
+            if (document.getElementById('beranda').classList.contains('active')) {
+                body.classList.add('active');
+            }
+        
+
+
+        </script>
+<script>
+async function kirimPengaduan(event){
+    event.preventDefault();
+
+    const tombol = event.target.querySelector("button");
+    tombol.innerText = "Mengirim...";
+    tombol.disabled = true;
+
+    const data = {
+        nama: document.getElementById("nama").value,
+        hp: document.getElementById("hp").value,
+        email: document.getElementById("email").value,
+        kategori: document.getElementById("kategori").value,
+        subjek: document.getElementById("subjek").value,
+        uraian: document.getElementById("uraian").value
+    };
+
+    try{
+        const response = await fetch("https://script.google.com/macros/s/AKfycby-BE11lUVakN5WpmeFfHsi4W44KZRDAVlTZZU84iJq1lS8Y5r7zXdcd8wY-S631W1x/exec", {
+            method: "POST",
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if(result.success){
+            alert("Pengaduan berhasil dikirim");
+            document.getElementById("formPengaduan").reset();
+        } else {
+            alert("Gagal mengirim");
+        }
+
+    } catch(error){
+        console.error(error);
+        alert("Server error");
+    }
+
+    tombol.innerText = "Kirim Pengaduan";
+    tombol.disabled = false;
+}
+
+        // SUPPORTING FEATURES SCRIPT
+
+        // BACK TO TOP FUNCTIONALITY
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // SCROLL PROGRESS INDICATOR
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+        }
+
+        // BACK TO TOP BUTTON VISIBILITY
+        function toggleBackToTop() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        }
+
+        // TOAST NOTIFICATION SYSTEM
+        function showToast(message, type = 'info', duration = 3000) {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // IMAGE LAZY LOADING
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        // LOADING OVERLAY
+        function hideLoadingOverlay() {
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hide');
+            }, 500);
+        }
+
+        // EVENT LISTENERS
+        window.addEventListener('scroll', () => {
+            updateScrollProgress();
+            toggleBackToTop();
+        });
+
+        window.addEventListener('load', () => {
+            hideLoadingOverlay();
+            lazyLoadImages();
+            showToast('Selamat datang di Portal Yonif TP 826/BTB', 'success', 2000);
+        });
+
+        // ENHANCED NAVIGATION WITH TOAST
+        const originalShowPage = window.showPage;
+        window.showPage = function(evt, pageName) {
+            originalShowPage(evt, pageName);
+            const pageTitles = {
+                'beranda': 'Beranda',
+                'profil': 'Profil Satuan',
+                'sejarah': 'Sejarah',
+                'struktur': 'Struktur Organisasi',
+                'tugas': 'Tugas Pokok',
+                'kegiatan': 'Kegiatan & Agenda',
+                'galeri': 'Galeri',
+                'pengaduan': 'Layanan Pengaduan',
+                'kontak': 'Kontak'
+            };
+            showToast(`Navigasi ke: ${pageTitles[pageName] || pageName}`, 'info', 1500);
+        };
+
+        // DARK MODE FUNCTIONALITY
+        function toggleDarkMode() {
+            const body = document.body;
+            const toggleBtn = document.getElementById('darkModeToggle');
+            const icon = document.getElementById('darkModeIcon');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                icon.textContent = '☀️';
+                toggleBtn.title = 'Switch to Light Mode';
+                localStorage.setItem('darkMode', 'enabled');
+                showToast('Mode gelap diaktifkan', 'info', 1500);
+            } else {
+                icon.textContent = '🌙';
+                toggleBtn.title = 'Switch to Dark Mode';
+                localStorage.setItem('darkMode', 'disabled');
+                showToast('Mode terang diaktifkan', 'info', 1500);
+            }
+        }
+
+        // Load dark mode preference
+        function loadDarkModePreference() {
+            const darkMode = localStorage.getItem('darkMode');
+            const icon = document.getElementById('darkModeIcon');
+
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                icon.textContent = '☀️';
+            } else {
+                icon.textContent = '🌙';
+            }
+        }
+
+        // Initialize dark mode on load
+        window.addEventListener('load', () => {
+            loadDarkModePreference();
+        });
+
+</script>
+    </body>
+    </html>
